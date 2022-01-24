@@ -21,7 +21,6 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         drawThread = new Thread() {
             float x = 0;
-            float y = 0;
             Paint paint = new Paint();
 
             @Override
@@ -29,7 +28,10 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 paint.setColor(Color.WHITE);
                 while (true) {
                     Canvas canvas = getHolder().lockCanvas();
-                    canvas.drawCircle(10, x, y, paint);
+                    canvas.drawColor(Color.BLACK);
+                    canvas.drawCircle(0, x, 50, paint);
+                    getHolder().unlockCanvasAndPost(canvas);
+                    x++;
                     try {
                         Thread.sleep(1500);
                     } catch (InterruptedException e) {
@@ -39,6 +41,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
             }
         };
+        drawThread.start();
     }
 
     @Override
